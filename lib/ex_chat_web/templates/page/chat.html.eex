@@ -34,13 +34,13 @@
       <div class="chat-messages">
         <div class="media">
           <figure class="media-left">
-            <p class="image is-64x64">
+            <p class="image is-48x48">
               <img src="http://bulma.io/images/placeholders/128x128.png">
             </p>
           </figure>
           <div class="media-content">
-            <div class="content">
-              <p><strong>John Smith</strong>
+            <div class="content chat-content">
+              <p><strong>John Smith</strong> <small>9:45 PM</small>
                 <br>Message here</p>
             </div>
           </div>
