@@ -1,0 +1,21 @@
+<section class="hero is-fullheight has-text-centered">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Welcome to ExChat</h1>
+      <h2 class="subtitle">Log in to chat!</h2>
+      <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+          <input class="input" type="text" placeholder="Username">
+        </p>
+        <p class="control">
+          <input class="input" type="password" placeholder="Password">
+        </p>
+        <p class="control">
+          <a class="button is-primary">
+            Login
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

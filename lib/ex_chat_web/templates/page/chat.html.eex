@@ -1,0 +1,62 @@
+<div class="columns">
+  <aside class="column is-2 hero is-dark is-fullheight aside">
+    <div class="main">
+      <div class="media">
+        <figure class="media-left">
+          <p class="image is-64x64">
+            <img src="http://bulma.io/images/placeholders/128x128.png">
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p><strong>John Smith</strong>
+              <br>
+              <small><a>Sign out</a> | <a>Profile</a></small>
+            </p>
+          </div>
+        </div>
+      </div>
+      <nav class="menu">
+        <p class="menu-label">
+          Channels
+        </p>
+        <ul class="menu-list">
+          <li><a class="is-active">#lobby</a></li>
+          <li><a>#room</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+  <div class="column no-padding">
+    <div class="chat-container">
+      <h1 class="title">#lobby</h1>
+      <hr>
+      <div class="chat-messages">
+        <div class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img src="http://bulma.io/images/placeholders/128x128.png">
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p><strong>John Smith</strong>
+                <br>Message here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="field has-addons is-fullwidth">
+        <div class="control is-expanded">
+          <input class="input" type="text" placeholder="Your Message here">
+        </div>
+        <div class="control">
+          <a class="button is-primary">
+            <span>Send</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
