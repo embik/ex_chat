@@ -16,8 +16,18 @@
 .chat-messages
   height: 75vh
   max-height: 75vh
-  overflow: scroll
+  overflow-y: scroll
   display: flex
+  flex-direction: column
+  flex: 1
 
-.chat-messages .media
-  align-self: flex-end
+.chat-messages
+  .media
+    align-self: flex-end
+    width: 100%
+    margin: 6px
+    padding: 6px
+  .media + .media
+    margin: 6px
+    padding: 6px
+    border-top: none
