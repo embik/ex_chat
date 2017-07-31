@@ -53,6 +53,10 @@ exports.config = {
             includePaths: ['node_modules/']
         },
     },
+    vue: {
+        extractCSS: true,
+        out: '../priv/static/css/components.css'
+    },
   },
 
   modules: {
