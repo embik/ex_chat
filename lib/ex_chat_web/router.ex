@@ -20,6 +20,13 @@ defmodule ExChatWeb.Router do
     get "/chat", PageController, :chat
   end
 
+  scope "/admin", ExChatWeb do
+    pipe_through :browser
+
+    resources "/users", UserController
+  end
+
+
   # Other scopes may use custom stacks.
   # scope "/api", ExChatWeb do
   #   pipe_through :api
