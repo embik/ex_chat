@@ -12,10 +12,15 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
+import {Socket} from "phoenix"
+import Vue from "vue"
+import ExChatApp from "../components/ex-chat-app.vue"
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
+Vue.component('ex-chat-app', ExChatApp)
 
-// import socket from "./socket"
+new Vue({
+    el: '#app',
+    render(createElement) {
+        return createElement(ExChatApp, {})
+    }
+})

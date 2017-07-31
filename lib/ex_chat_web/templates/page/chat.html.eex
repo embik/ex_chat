@@ -31,31 +31,8 @@
     <div class="chat-container">
       <h1 class="title">#lobby</h1>
       <hr>
-      <div class="chat-messages">
-        <div class="media">
-          <figure class="media-left">
-            <p class="image is-48x48">
-              <img src="http://bulma.io/images/placeholders/128x128.png">
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content chat-content">
-              <p><strong>John Smith</strong> <small>9:45 PM</small>
-                <br>Message here</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="field has-addons is-fullwidth">
-        <div class="control is-expanded">
-          <input class="input" type="text" placeholder="Your Message here">
-        </div>
-        <div class="control">
-          <a class="button is-primary">
-            <span>Send</span>
-          </a>
-        </div>
+      <div id="app">
+        <ex-chat-app></ex-chat-app>
       </div>
     </div>
   </div>
