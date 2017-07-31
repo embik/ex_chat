@@ -101,4 +101,9 @@ defmodule ExChat.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def verify_user_credentials(username, password) do
+    Repo.get_by(User, name: username)
+    |> Comeonin.Bcrypt.check_pass(password)
+  end
 end

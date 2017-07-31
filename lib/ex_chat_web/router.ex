@@ -20,6 +20,12 @@ defmodule ExChatWeb.Router do
     get "/chat", PageController, :chat
   end
 
+  scope "/auth", ExChatWeb do
+    pipe_through :browser
+
+    post "/login", SessionController, :login
+  end
+
   scope "/admin", ExChatWeb do
     pipe_through :browser
 

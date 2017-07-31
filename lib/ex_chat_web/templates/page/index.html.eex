@@ -3,19 +3,19 @@
     <div class="container">
       <h1 class="title">Welcome to ExChat</h1>
       <h2 class="subtitle">Log in to chat!</h2>
+      <%= form_for @conn, session_path(@conn, :login), [as: :session], fn f -> %>
       <div class="field is-grouped is-grouped-centered">
         <p class="control">
-          <input class="input" type="text" placeholder="Username">
+          <%= text_input f, :username, placeholder: "Username", class: "input" %>
         </p>
         <p class="control">
-          <input class="input" type="password" placeholder="Password">
+          <%= password_input f, :password, placeholder: "Password", class: "input "%>
         </p>
         <p class="control">
-          <a class="button is-primary">
-            Login
-          </a>
+          <%= submit "Log in", class: "button is-primary" %>
         </p>
       </div>
+      <% end %>
     </div>
   </div>
 </section>
