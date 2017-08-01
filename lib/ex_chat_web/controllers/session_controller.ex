@@ -19,4 +19,11 @@ defmodule ExChatWeb.SessionController do
         |> redirect(to: page_path(conn, :index))
     end
   end
+
+  def logout(conn, _params) do
+    conn
+    |> put_flash(:info, "Logged out.")
+    |> Guardian.Plug.sign_out
+    |> redirect(to: page_path(conn, :index))
+  end
 end
