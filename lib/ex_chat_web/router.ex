@@ -29,7 +29,7 @@ defmodule ExChatWeb.Router do
     pipe_through :browser
 
     post "/login", SessionController, :login
-    get "/logout", SessionController, :logut # Maybe use POST here too?
+    get "/logout", SessionController, :logout # Maybe use POST here too?
   end
 
   scope "/admin", ExChatWeb do
