@@ -11,7 +11,8 @@ defmodule ExChatWeb.RoomChannel do
 
   def handle_in("new_msg", %{"body" => body}, socket) do
     time = DateTime.utc_now |> DateTime.to_iso8601
-    broadcast! socket, "new_msg", %{body: body, username: socket.assigns.username, time: time}
+    user = Guardian.Phoenix.Socket.current_resource(socket)
+    broadcast! socket, "new_msg", %{body: body, username: user.name, time: time}
     {:noreply, socket}
   end
 

@@ -9,9 +9,9 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <p><strong>John Smith</strong>
+            <p><strong><%= @user.display_name %></strong>
               <br>
-              <small><a>Sign out</a> | <a>Profile</a></small>
+              <small><a href="<%= session_path(@conn, :logout) %>">Sign out</a></small>
             </p>
           </div>
         </div>
@@ -22,7 +22,6 @@
         </p>
         <ul class="menu-list">
           <li><a class="is-active">#lobby</a></li>
-          <li><a>#room</a></li>
         </ul>
       </nav>
     </div>
@@ -32,7 +31,8 @@
       <h1 class="title">#lobby</h1>
       <hr>
       <div id="app">
-        <ex-chat-app></ex-chat-app>
+        <script>window.jwt = "<%= Guardian.Plug.current_token(@conn) %>";</script>
+        <ex-chat-app jwt="<%= Guardian.Plug.current_token(@conn) %>"></ex-chat-app>
       </div>
     </div>
   </div>

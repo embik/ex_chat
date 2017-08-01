@@ -29,16 +29,19 @@
 import {Socket} from "phoenix"
 
 export default {
+    props: ['jwt'],
     data() {
         return {
             socket: null,
             channel: null,
             message: "",
             messages: [],
+            token: "",
             username: "john"
         }
     },
     mounted() {
+        this.token = window.jwt
         this.connectToChat()
     },
     updated() {
@@ -55,7 +58,7 @@ export default {
         },
 
         connectToChat() {
-            this.socket = new Socket("/socket", {params: {username: this.username}})
+            this.socket = new Socket("/socket", {params: { guardian_token: this.token }})
             this.socket.connect()
 
             this.channel = this.socket.channel("room:lobby", {})
