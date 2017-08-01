@@ -9,15 +9,20 @@ defmodule ExChatWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :browser_session do
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", ExChatWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :browser_session]
 
     get "/", PageController, :index
-    get "/chat", PageController, :chat
+    get "/chat", ChatController, :chat
   end
 
   scope "/auth", ExChatWeb do

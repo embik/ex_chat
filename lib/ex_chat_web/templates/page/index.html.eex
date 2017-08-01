@@ -16,6 +16,15 @@
         </p>
       </div>
       <% end %>
+      <br>
+      <div class="container flash-container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <div class="notification flash is-info"><%= get_flash(@conn, :info) %></div>
+            <div class="notification flash is-danger"><%= get_flash(@conn, :error) %></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
