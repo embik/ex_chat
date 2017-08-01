@@ -16,11 +16,14 @@ import {Socket} from "phoenix"
 import Vue from "vue"
 import ExChatApp from "../components/ex-chat-app.vue"
 
-Vue.component('ex-chat-app', ExChatApp)
+var elem = document.getElementById("app")
+if (elem != null) {
+    Vue.component('ex-chat-app', ExChatApp)
 
-new Vue({
-    el: '#app',
-    render(createElement) {
-        return createElement(ExChatApp, {})
-    }
-})
+    new Vue({
+        el: '#app',
+        render(createElement) {
+            return createElement(ExChatApp, {})
+        }
+    })
+}
