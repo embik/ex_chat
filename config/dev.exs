@@ -40,3 +40,5 @@ config :ex_chat, ExChat.Repo,
   database: "ex_chat_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :tirexs, :uri, "http://127.0.0.1:9200"
