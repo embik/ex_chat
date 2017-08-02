@@ -6,15 +6,11 @@ defmodule ExChatWeb.RoomChannel do
 
   intercept ["new_msg"]
 
-  def join("room:lobby", payload, socket) do
+  def join("room:" <> room, _payload, socket) do
     user = Guardian.Phoenix.Socket.current_resource(socket)
-    send(self(), {:after_join, "lobby", user})
 
+    send(self(), {:after_join, room, user})
     {:ok, assign(socket, :user, user)}
-  end
-
-  def join("room:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "Unauthorized"}}
   end
 
   def handle_info({:after_join, room, user}, socket) do
@@ -31,10 +27,14 @@ defmodule ExChatWeb.RoomChannel do
     time = DateTime.utc_now |> DateTime.to_iso8601
     user = socket.assigns.user
 
-    ExChat.MsgDb.put(body, user.name, time, "lobby")
-    broadcast!(socket, "new_msg", %{body: body, username: user.name, time: time})
-
-    {:noreply, socket}
+    case socket.topic do
+      "room:" <> room ->
+        ExChat.MsgDb.put(body, user.name, time, room)
+        broadcast!(socket, "new_msg", %{body: body, username: user.name, time: time})
+        {:noreply, socket}
+      _ ->
+        :error
+    end
   end
 
   def handle_out("new_msg", payload, socket) do
