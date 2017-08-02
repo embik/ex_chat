@@ -1,32 +1,52 @@
 <template>
-    <div class="ex-chat-app">
-        <div class="chat-messages">
-            <div class="media" v-for="message in messages">
-                <figure class="media-left">
-                    <p class="image is-48x48">
-                        <img src="http://bulma.io/images/placeholders/128x128.png">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content chat-content">
-                        <p><strong>{{ message.username }}</strong> <small>{{ message.time.toLocaleTimeString() }}</small>
-                            <br>{{ message.body }}
-                        </p>
+    <div class="columns">
+        <aside class="column is-2 hero is-dark is-fullheight aside">
+            <div class="main">
+                <!-- TODO: User -->
+                <nav class="menu">
+                    <p class="menu-label">Channels</p>
+                    <ul class="menu-list">
+                        <li><a class="is-active">#lobby</a></li>
+                    </ul>
+                </nav>
+                <online-users :presences="presences"></online-users>
+            </div>
+        </aside>
+        <div class="column no-padding">
+            <div class="chat-container">
+                <h1 class="title">#lobby</h1>
+                <hr>
+                <div class="ex-chat-app">
+                    <div class="chat-messages">
+                        <div class="media" v-for="message in messages">
+                            <figure class="media-left">
+                                <p class="image is-48x48">
+                                    <img src="http://bulma.io/images/placeholders/128x128.png">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content chat-content">
+                                    <p><strong>{{ message.username }}</strong> <small>{{ message.time.toLocaleTimeString() }}</small>
+                                    <br>{{ message.body }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="field has-addons is-fullwidth">
+                        <div class="control is-expanded">
+                            <input class="input" type="text" placeholder="Your Message" v-model="message" v-on:keyup.13="sendMessage">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <br>
-        <div class="field has-addons is-fullwidth">
-            <div class="control is-expanded">
-                <input class="input" type="text" placeholder="Your Message" v-model="message" v-on:keyup.13="sendMessage">
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import {Socket} from "phoenix"
+import {Socket, Presence} from "phoenix"
 
 export default {
     props: ['jwt'],
@@ -36,8 +56,8 @@ export default {
             channel: null,
             message: "",
             messages: [],
-            token: "",
-            username: "john"
+            presences: {},
+            token: ""
         }
     },
     mounted() {
@@ -68,11 +88,18 @@ export default {
                 this.messages.push(payload)
             })
 
+            this.channel.on("presence_state", state => {
+                this.presences = Presence.syncState(this.presences, state)
+            })
+            this.channel.on("presence_diff", diff => {
+                this.presences = Presence.syncDiff(this.presences, diff)
+            })
+
             this.channel.join()
                 .receive("ok", response => { console.log("Joined successfully", response) })
                 .receive("error", response => { console.log("Unable to join", response) })
-        }
-    }
+        },
+    },
 }
 </script>
 

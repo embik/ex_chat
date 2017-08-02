@@ -12,13 +12,15 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
-import {Socket} from "phoenix"
+import {Socket, Presence} from "phoenix"
 import Vue from "vue"
 import ExChatApp from "../components/ex-chat-app.vue"
+import OnlineUsers from "../components/online-users.vue"
 
 var elem = document.getElementById("app")
 if (elem != null) {
     Vue.component('ex-chat-app', ExChatApp)
+    Vue.component('online-users', OnlineUsers)
 
     new Vue({
         el: '#app',

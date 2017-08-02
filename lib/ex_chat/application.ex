@@ -12,6 +12,7 @@ defmodule ExChat.Application do
       supervisor(ExChat.Repo, []),
       # Start the endpoint when the application starts
       supervisor(ExChatWeb.Endpoint, []),
+      supervisor(ExChatWeb.Presence, []),
       # Start your own worker by calling: ExChat.Worker.start_link(arg1, arg2, arg3)
       # worker(ExChat.Worker, [arg1, arg2, arg3]),
     ]
