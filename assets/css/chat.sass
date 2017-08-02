@@ -14,20 +14,21 @@
   margin: 12px
 
 .chat-messages
-  height: 75vh
-  max-height: 75vh
+  height: 72.5vh
+  max-height: 72.5vh
   overflow-y: scroll
   display: flex
   flex-direction: column
   flex: 1
 
 .chat-messages
+  .msg-container
+    display: block
+    margin: 6px
   .media
     align-self: flex-end
-    width: 100%
-    margin: 6px
-    padding: 6px
+    //width: 100%
   .media + .media
-    margin: 6px
-    padding: 6px
+    margin: 0
+    padding: 0
     border-top: none

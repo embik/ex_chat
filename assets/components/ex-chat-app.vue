@@ -18,17 +18,19 @@
                 <hr>
                 <div class="ex-chat-app">
                     <div class="chat-messages">
-                        <div class="media" v-for="message in messages">
-                            <figure class="media-left">
-                                <p class="image is-48x48">
-                                    <img src="http://bulma.io/images/placeholders/128x128.png">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="content chat-content">
-                                    <p><strong>{{ message.username }}</strong> <small>{{ message.time.toLocaleTimeString() }}</small>
-                                    <br>{{ message.body }}
+                        <div class="msg-container" v-for="message in messages">
+                            <div class="media">
+                                <figure class="media-left">
+                                    <p class="image is-48x48">
+                                        <img src="http://bulma.io/images/placeholders/128x128.png">
                                     </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content chat-content">
+                                        <p><strong>{{ message.username }}</strong> <small>{{ message.time.toLocaleTimeString() }}</small>
+                                        <br>{{ message.body }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +98,10 @@ export default {
             })
 
             this.channel.join()
-                .receive("ok", response => { console.log("Joined successfully", response) })
+                .receive("ok", response => {
+                    this.messages = []
+                    console.log("Joined successfully", response)
+                })
                 .receive("error", response => { console.log("Unable to join", response) })
         },
     },
