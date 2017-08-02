@@ -41,4 +41,7 @@ config :ex_chat, ExChat.Repo,
   hostname: "localhost",
   pool_size: 10
 
+config :guardian, Guardian,
+  secret_key: "kOwrxQ8Mh6xZc1FHULZ0uzrwQjgjcnitl+XHukwf0/Ie8QIclox9f8Qbs4RP2/Ns"
+
 config :tirexs, :uri, "http://127.0.0.1:9200"

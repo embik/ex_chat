@@ -30,7 +30,6 @@ config :guardian, Guardian,
   ttl: { 30, :days },
   allowed_drift: 2000,
   verify_issuer: true,
-  secret_key: "kOwrxQ8Mh6xZc1FHULZ0uzrwQjgjcnitl+XHukwf0/Ie8QIclox9f8Qbs4RP2/Ns",
   serializer: ExChat.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom
