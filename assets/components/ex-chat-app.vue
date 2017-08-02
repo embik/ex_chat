@@ -1,6 +1,6 @@
 <template>
     <div class="columns">
-        <aside class="column is-2 hero is-dark is-fullheight aside">
+        <aside class="column is-2 hero is-dark is-fullheight is-hidden-mobile aside">
             <div class="main">
                 <!-- TODO: User -->
                 <nav class="menu">
