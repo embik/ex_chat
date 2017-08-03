@@ -82,7 +82,7 @@ export default {
             this.channels[room] = this.socket.channel("room:" + room, {})
             this.channels[room].on("new_msg", payload => {
                 payload.received_at = Date()
-                payload.time = new Date(payload.time)
+                payload.time = new Date(payload.time * 1000)
                 this.messages[room].push(payload)
             })
 

@@ -30,7 +30,7 @@ defmodule ExChatWeb.RoomChannel do
   end
 
   def handle_in("new_msg", %{"body" => body}, socket) do
-    time = DateTime.utc_now |> DateTime.to_iso8601
+    time = DateTime.utc_now |> DateTime.to_unix
     user = socket.assigns.user
 
     case socket.topic do

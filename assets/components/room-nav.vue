@@ -1,6 +1,9 @@
 <template>
     <nav class="menu">
-        <p class="menu-label">Rooms</p>
+        <p class="menu-label">
+            Rooms
+            <!--<a style="float:right;">Add</a>-->
+        </p>
         <ul class="menu-list">
             <li v-for="room in rooms">
                 <a v-bind:class="isCurrentRoom(room)" v-on:click="internalCurrentRoom = room">
@@ -20,6 +23,7 @@ export default {
         }
     },
     mounted() {
+        console.log(this.$parent)
         this.internalCurrentRoom = this.initialRoom
     },
     watch: {
