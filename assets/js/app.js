@@ -16,11 +16,15 @@ import {Socket, Presence} from "phoenix"
 import Vue from "vue"
 import ExChatApp from "../components/ex-chat-app.vue"
 import OnlineUsers from "../components/online-users.vue"
+import RoomNav from "../components/room-nav.vue"
+import ChatWindow from "../components/chat-window.vue"
 
 var elem = document.getElementById("app")
 if (elem != null) {
     Vue.component('ex-chat-app', ExChatApp)
     Vue.component('online-users', OnlineUsers)
+    Vue.component('room-nav', RoomNav)
+    Vue.component('chat-window', ChatWindow)
 
     new Vue({
         el: '#app',

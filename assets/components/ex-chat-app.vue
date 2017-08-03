@@ -3,14 +3,7 @@
         <aside class="column is-2 hero is-dark is-fullheight is-hidden-mobile aside">
             <div class="main">
                 <!-- TODO: User -->
-                <nav class="menu">
-                    <p class="menu-label">Channels</p>
-                    <ul class="menu-list">
-                        <li v-for="room in rooms">
-                            <a v-bind:class="isCurrentRoom(room)" v-on:click="currentChannel = room">#{{ room }}</a>
-                        </li>
-                    </ul>
-                </nav>
+                <room-nav :rooms="rooms" :initial-room="initialRoom" v-model="currentChannel"></room-nav>
                 <online-users :presences="presences" :current-channel="currentChannel"></online-users>
             </div>
         </aside>
@@ -19,24 +12,7 @@
                 <h1 class="title">#{{ currentChannel }}</h1>
                 <hr>
                 <div class="ex-chat-app">
-                    <div class="chat-messages">
-                        <div class="msg-container" v-for="message in messages[currentChannel]">
-                            <div class="media">
-                                <figure class="media-left">
-                                    <p class="image is-48x48">
-                                        <img src="http://bulma.io/images/placeholders/128x128.png">
-                                    </p>
-                                </figure>
-                                <div class="media-content">
-                                    <div class="content chat-content">
-                                        <p><strong>{{ message.username }}</strong> <small>{{ message.time.toLocaleTimeString() }}</small>
-                                        <br>{{ message.body }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <chat-window :current-channel="currentChannel" :messages="messages"></chat-window>
                     <br>
                     <div class="field has-addons is-fullwidth">
                         <div class="control is-expanded">
@@ -62,6 +38,7 @@ export default {
             currentChannel: "",
             message: "",
             rooms: ["lobby", "test"],
+            initialRoom: "lobby",
             messages: {},
             presences: {},
             token: ""
@@ -118,13 +95,6 @@ export default {
                 })
                 .receive("error", response => { console.log("Unable to join", response) })
         },
-
-        isCurrentRoom: function(room) {
-            if (this.currentChannel == room) {
-                return "is-active"
-            }
-            return ""
-        }
     }
 }
 </script>
