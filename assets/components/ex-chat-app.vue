@@ -10,10 +10,9 @@
         <div class="column no-padding">
             <div class="chat-container">
                 <div class="columns">
-                    <div class="column is-10">
+                    <div class="column">
                         <h1 class="title">#{{ currentChannel }}</h1>
                     </div>
-                    <div class="column">Users in this room: {{ users_online }}</div>
                 </div>
                 <hr>
                 <div class="ex-chat-app">
