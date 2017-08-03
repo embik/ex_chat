@@ -9,7 +9,12 @@
         </aside>
         <div class="column no-padding">
             <div class="chat-container">
-                <h1 class="title">#{{ currentChannel }}</h1>
+                <div class="columns">
+                    <div class="column is-10">
+                        <h1 class="title">#{{ currentChannel }}</h1>
+                    </div>
+                    <div class="column">Users in this room: {{ users_online }}</div>
+                </div>
                 <hr>
                 <div class="ex-chat-app">
                     <chat-window :current-channel="currentChannel" :messages="messages"></chat-window>
@@ -95,6 +100,15 @@ export default {
                 })
                 .receive("error", response => { console.log("Unable to join", response) })
         },
+    },
+    computed: {
+        users_online: function() {
+            var size = 0
+            for(var key in this.presences[this.currentChannel]) {
+                if (this.presences[this.currentChannel].hasOwnProperty(key)) size++
+            }
+            return size
+        }
     }
 }
 </script>

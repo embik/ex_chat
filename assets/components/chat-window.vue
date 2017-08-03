@@ -1,5 +1,9 @@
 <template>
-    <div class="chat-messages">
+    <div class="chat-messages" v-on:scroll="requestOlderMessages">
+        <div class="content has-text-centered has-text-grey-light" style="margin-top: 48px;">
+            <small v-if="noNewMessages[currentChannel]">No new messages for this room available!</small>
+            <small v-else>Scroll to load older messages ...</small>
+        </div>
         <div class="msg-container" v-for="message in messages[currentChannel]">
             <div class="media">
                 <figure class="media-left">
@@ -23,10 +27,23 @@
 </template>
 
 <script>
+import Vue from "vue"
+
 export default {
     props: ['current-channel', 'messages'],
+    data() {
+        return {
+            noNewMessages: {}
+        }
+    },
     updated() {
         this.$el.scrollTop = this.$el.scrollHeight
+    },
+    methods: {
+        requestOlderMessages(event) {
+            if (this.noNewMessages[this.currentChannel] != true && event.target.scrollTop == 0 && this.messages[this.currentChannel] != [])
+                console.log("Requesting older messages from server ...")
+        }
     }
 }
 </script>
