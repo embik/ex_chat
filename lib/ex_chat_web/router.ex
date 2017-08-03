@@ -36,6 +36,7 @@ defmodule ExChatWeb.Router do
     pipe_through :browser
 
     resources "/users", UserController
+    resources "/rooms", RoomController
   end
 
 

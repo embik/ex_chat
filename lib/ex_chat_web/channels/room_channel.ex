@@ -2,15 +2,21 @@ defmodule ExChatWeb.RoomChannel do
   use ExChatWeb, :channel
 
   alias ExChatWeb.Presence
+  alias ExChat.Chats
+  alias ExChat.Chats.Room
   require Logger
 
   intercept ["new_msg"]
 
-  def join("room:" <> room, _payload, socket) do
+  def join("room:" <> room_name, _payload, socket) do
     user = Guardian.Phoenix.Socket.current_resource(socket)
-
-    send(self(), {:after_join, room, user})
-    {:ok, assign(socket, :user, user)}
+    case Chats.get_room_by_name(room_name) do
+      %Room{} = room ->
+        send(self(), {:after_join, room.name, user})
+        {:ok, assign(socket, :user, user)}
+      _ ->
+        {:error, %{"reason" => "room does not exist"}}
+    end
   end
 
   def handle_info({:after_join, room, user}, socket) do
