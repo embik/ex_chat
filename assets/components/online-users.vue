@@ -13,7 +13,7 @@
 import {Presence} from "phoenix"
 
 export default {
-    props: ['presences'],
+    props: ['presences', 'current-channel'],
     mounted() {
     },
     methods: {
@@ -25,7 +25,11 @@ export default {
     },
     computed: {
         users: function() {
-            return Presence.list(this.presences, this.listBy).slice(0, -1)
+            if (this.presences[this.currentChannel]) {
+                return Presence.list(this.presences[this.currentChannel], this.listBy).slice(0, -1)
+            } else {
+                return []
+            }
         }
     }
 }

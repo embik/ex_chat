@@ -6,19 +6,21 @@
                 <nav class="menu">
                     <p class="menu-label">Channels</p>
                     <ul class="menu-list">
-                        <li><a class="is-active">#lobby</a></li>
+                        <li v-for="room in rooms">
+                            <a v-bind:class="isCurrentRoom(room)" v-on:click="currentChannel = room">#{{ room }}</a>
+                        </li>
                     </ul>
                 </nav>
-                <online-users :presences="presences"></online-users>
+                <online-users :presences="presences" :current-channel="currentChannel"></online-users>
             </div>
         </aside>
         <div class="column no-padding">
             <div class="chat-container">
-                <h1 class="title">#lobby</h1>
+                <h1 class="title">#{{ currentChannel }}</h1>
                 <hr>
                 <div class="ex-chat-app">
                     <div class="chat-messages">
-                        <div class="msg-container" v-for="message in messages">
+                        <div class="msg-container" v-for="message in messages[currentChannel]">
                             <div class="media">
                                 <figure class="media-left">
                                     <p class="image is-48x48">
@@ -49,15 +51,18 @@
 
 <script>
 import {Socket, Presence} from "phoenix"
+import Vue from "vue"
 
 export default {
     props: ['jwt'],
     data() {
         return {
             socket: null,
-            channel: null,
+            channels: {},
+            currentChannel: "",
             message: "",
-            messages: [],
+            rooms: ["lobby", "test"],
+            messages: {},
             presences: {},
             token: ""
         }
@@ -75,7 +80,7 @@ export default {
     },
     methods: {
         sendMessage() {
-            this.channel.push("new_msg", { body: this.message })
+            this.channels[this.currentChannel].push("new_msg", { body: this.message })
             this.message = ""
         },
 
@@ -83,28 +88,44 @@ export default {
             this.socket = new Socket("/socket", {params: { guardian_token: this.token }})
             this.socket.connect()
 
-            this.channel = this.socket.channel("room:lobby", {})
-            this.channel.on("new_msg", payload => {
+            for (var id in this.rooms)
+                this.joinRoom(this.rooms[id])
+            this.currentChannel = "lobby"
+        },
+
+        joinRoom(room) {
+            Vue.set(this.messages, room, [])
+            Vue.set(this.presences, room, {})
+
+            this.channels[room] = this.socket.channel("room:" + room, {})
+            this.channels[room].on("new_msg", payload => {
                 payload.received_at = Date()
                 payload.time = new Date(payload.time)
-                this.messages.push(payload)
+                this.messages[room].push(payload)
             })
 
-            this.channel.on("presence_state", state => {
-                this.presences = Presence.syncState(this.presences, state)
+            this.channels[room].on("presence_state", state => {
+                this.presences[room] = Presence.syncState(this.presences[room], state)
             })
-            this.channel.on("presence_diff", diff => {
-                this.presences = Presence.syncDiff(this.presences, diff)
+            this.channels[room].on("presence_diff", diff => {
+                this.presences[room] = Presence.syncDiff(this.presences[room], diff)
             })
 
-            this.channel.join()
+            this.channels[room].join()
                 .receive("ok", response => {
-                    this.messages = []
+                    Vue.set(this.messages, room, [])
                     console.log("Joined successfully", response)
                 })
                 .receive("error", response => { console.log("Unable to join", response) })
         },
-    },
+
+        isCurrentRoom: function(room) {
+            if (this.currentChannel == room) {
+                return "is-active"
+            }
+            return ""
+        }
+    }
 }
 </script>
 
