@@ -24,6 +24,11 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :is_admin, class: "control-label" %>
+    <%= checkbox f, :is_admin, class: "checkbox" %>
+    <%= error_tag f, :is_admin %>
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

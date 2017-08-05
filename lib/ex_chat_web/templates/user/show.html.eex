@@ -17,6 +17,10 @@
     <%= @user.password_hash %>
   </li>
 
+  <li>
+    <strong>Administrator:</strong>
+    <%= @user.is_admin %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>

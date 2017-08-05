@@ -9,6 +9,7 @@ defmodule ExChat.Accounts.User do
     field :name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :is_admin, :boolean
 
     timestamps()
   end
@@ -16,15 +17,17 @@ defmodule ExChat.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :display_name, :password])
-    |> validate_required([:name, :display_name, :password])
+    |> cast(attrs, [:name, :display_name, :password, :is_admin])
+    |> validate_required([:name, :display_name, :is_admin])
     |> unique_constraint(:name)
     |> put_pass_hash
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true,
       changes: %{password: password}} = changeset) do
-    change(changeset, Comeonin.Bcrypt.add_hash(password))
+    if password != "" do
+      change(changeset, Comeonin.Bcrypt.add_hash(password))
+    end
   end
   defp put_pass_hash(changeset), do: changeset
 end

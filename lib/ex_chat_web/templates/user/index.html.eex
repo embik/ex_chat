@@ -6,7 +6,7 @@
       <th>Name</th>
       <th>Display name</th>
       <th>Password hash</th>
-
+      <th>Administrator</th>
       <th></th>
     </tr>
   </thead>
@@ -16,6 +16,7 @@
       <td><%= user.name %></td>
       <td><%= user.display_name %></td>
       <td><%= user.password_hash %></td>
+      <td><%= user.is_admin %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
