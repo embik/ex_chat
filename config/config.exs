@@ -30,7 +30,12 @@ config :guardian, Guardian,
   ttl: { 30, :days },
   allowed_drift: 2000,
   verify_issuer: true,
-  serializer: ExChat.GuardianSerializer
+  serializer: ExChat.GuardianSerializer,
+  permissions: %{
+    admin: [
+      :all
+    ]
+  }
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

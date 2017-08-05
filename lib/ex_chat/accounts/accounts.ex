@@ -106,4 +106,14 @@ defmodule ExChat.Accounts do
     Repo.get_by(User, name: username)
     |> Comeonin.Bcrypt.check_pass(password)
   end
+
+  def get_perms(%User{} = user) do
+    admin =
+      case user.is_admin do
+        true -> [:all]
+        false -> []
+      end
+
+    %{admin: admin}
+  end
 end

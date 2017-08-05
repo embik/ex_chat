@@ -10,7 +10,7 @@ defmodule ExChatWeb.SessionController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Logged in.")
-        |> Guardian.Plug.sign_in(user)
+        |> Guardian.Plug.sign_in(user, :access, perms: Accounts.get_perms(user))
         |> redirect(to: chat_path(conn, :chat))
       {:error, message} ->
         Logger.info(message)

@@ -14,6 +14,11 @@ defmodule ExChatWeb.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  pipeline :browser_admin_perms do
+    plug Guardian.Plug.EnsurePermissions, handler: ExChatWeb.SessionHandler,
+      admin: [:all]
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -33,7 +38,7 @@ defmodule ExChatWeb.Router do
   end
 
   scope "/admin", ExChatWeb do
-    pipe_through :browser
+    pipe_through [:browser, :browser_session, :browser_admin_perms]
 
     resources "/users", UserController
     resources "/rooms", RoomController
